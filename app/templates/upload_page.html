@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+    <style>
+        .item{
+            margin-left:10px;
+        }
+    </style>
+
+    <h1 class="item">{{ upload.title }}</h1>
+    <h5 class="item">{{ upload.author }}</h5>
+    <img class="img item" src="{{url_for('static', filename='thumbnails/'+upload.thumbnail)}}" alt="" height="256" width="256">
+    <p class="item"> {{ upload.description }}</p>
+    <hr>
+    <a class="btn btn-primary item" href="/download/{{ upload.id }}">Скачать</a>
+    {{ upload.filename }}
+    <hr>
+    <h3 class="item">Комментарии: </h3>
+    <form method="post" enctype=multipart/form-data>
+        {{ form.hidden_tag() }}
+        {% if current_user.is_authenticated %}
+            <a class="item">
+                {{ form.comment(class_="form-control", style="width:30%") }}
+            </a>
+            <a class="item">
+                {{ form.submit(class_="btn btn-outline-primary") }}
+            </a>
+        {% endif %}
+    </form>
+    {% for comment in comments %}
+        {% if comment.upload_id == upload.id %}
+        <div class="item">
+            {% if comment.author == upload.author %}
+                <a style="color:chocolate">{{ comment.author }}:</a>
+            {% else %}
+                <a style="color:black">{{ comment.author }}:</a>
+            {% endif %}
+            <a>{{ comment.text }}</a>
+            {% if comment.author == current_user.username %}
+                <a href="/uploads/{{ upload.id }}/delete/{{ comment.id }}">🗑️</a>
+            {% endif %}
+            <br>
+        </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

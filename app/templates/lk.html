@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h1 align="center">Личный кабинет {{ current_user.username }}</h1>
+    <h2 style="margin-left: 10px;">Мои публикации:</h2>
+    <hr>
+
+    <style>
+        .wrapper{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            grid-auto-flow: dense;
+        }
+    </style>
+
+    <div class="wrapper p-3 mt-2">
+        {% for upload in uploads %}
+            {% if upload.author == current_user.username %}
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{url_for('static', filename='thumbnails/'+upload.thumbnail)}}" class="img-fluid rounded-start" alt="">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h4 class="card-title">{{upload.title}}</h4>
+                                <h5> {{ upload.description }} </h5>
+                            </div>
+                            <div class="card-footer">
+                                <a class="btn btn-primary" href="/download/{{ upload.id }}">Скачать</a>
+                                <a class="btn btn-outline-danger" href="/delete/{{ upload.id }}">Удалить</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            {% endif %}
+        {% endfor %}
+</div>
+{% endblock %}

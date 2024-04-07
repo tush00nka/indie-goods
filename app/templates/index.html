@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h1 align="center">Все публикации</h1>
+    <hr>
+
+    <style>
+        .wrapper{
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            grid-auto-flow: dense;
+        }
+    </style>
+
+    <form method="post" enctype=multipart/form-data>
+        {{ form.hidden_tag() }}
+        <p class="row" style="margin-left:10px;">
+            {{ form.query(class_="form-control", style="width:15%") }}
+            {{ form.submit(class_="btn btn-primary") }}
+        </p>
+    </form>
+
+    <div class="wrapper">
+        {% for upload in uploads %}
+            <div class="card mb-3" style="max-width:256px;">
+                <a href="/uploads/{{ upload.id }}">
+                    <img src="{{url_for('static', filename='thumbnails/'+upload.thumbnail)}}" alt="" height="256" width="256">
+                </a>
+                <div class="card-body">
+                    <h4 class="card-title">{{upload.title}}</h4>
+                    <h6 class="card-subtitle text-muted">{{upload.author}}</h6>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-primary" href="/download/{{ upload.id }}">Скачать</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

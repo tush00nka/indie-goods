@@ -1,0 +1,28 @@
+html,
+body,
+.wrapper {
+  height: 100%;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+}
+
+.content{
+    flex: 1 0 auto;
+}
+
+
+
+
+/* FOOTER */
+.footer {
+    display: flex;
+    height: 100px;
+    background-color: antiquewhite;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex: 0 0 auto;
+}
