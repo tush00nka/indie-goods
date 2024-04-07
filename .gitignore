@@ -1,7 +1,7 @@
-./__pychache__
-./bin
-./include
-./lib
-./lib64
-./app.db
-./pyvenv.cfg
+__pychache__
+bin
+include
+lib
+lib64
+app.db
+pyvenv.cfg
